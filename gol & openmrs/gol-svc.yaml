@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gol-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: gol
+  ports:
+    - name: webport
+      port: 33000
+      targetPort: 8080
+        

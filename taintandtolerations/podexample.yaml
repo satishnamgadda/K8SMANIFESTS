@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-pod
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.23
+      ports:
+        - containerPort: 80
+          protocol: TCP
+  tolerations:
+    effect: NoSchedule
+    key: POC
+    operator: Equal
+    value: "true"          

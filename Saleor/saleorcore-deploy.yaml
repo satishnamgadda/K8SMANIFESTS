@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saleorcore-deploy
+spec:
+  minReadySeconds: 5
+  replicas: 1
+  selector:
+    matchLabels:
+      app: saleorcore
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      name: saleorcore
+      labels:
+        app: saleorcore
+    spec:
+      containers:
+        - name: saleor-pod
+          image: satish1990/saleor:dev-19122022
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          command:
+            - python
+            - manage.py
+            - runserver
+            - 0.0.0.0:8000 
+          volumeMounts:
+            - name: mysaleorcore  
+              mountPath: /saleor
+      volumes:
+        - name: mysaleorcore
+          persistentVolumeClaim: 
+            claimName: psql-aws-claim
+            readOnly: false     
+
+                      

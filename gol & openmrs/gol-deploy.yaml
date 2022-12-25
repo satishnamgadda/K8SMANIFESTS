@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: gol-deploy
+spec:
+  minReadySeconds: 5
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gol
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      name: gol
+      labels:
+        app: gol
+    spec:
+      containers:
+        - name: gol-pod 
+          image: satish1990/gol:1.0         
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          command:
+            - catalina.sh
+            - run    

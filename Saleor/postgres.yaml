@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deploy
+spec:
+  minReadySeconds: 5
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  strategy: 
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      name: db-demo
+      labels:
+        app: db
+    spec:
+      containers:
+        - name: postgres-cont
+          image: library/postgres:13-alpine
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          volumeMounts:
+            - name: mypsql  
+              mountPath: saleor-db:/var/lib/postgresql/data
+      volumes:
+        - name: mypsql
+          persistentVolumeClaim: 
+            claimName: psql-aws-claim
+            readOnly: false  
+
+          
+

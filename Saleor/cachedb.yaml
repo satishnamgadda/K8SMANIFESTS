@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cache-deploy
+spec:
+  minReadySeconds: 5
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: db
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      name: cache-pod
+      labels:
+        app: db
+    spec:
+      containers:
+        - name: cachedb-pod
+          image: library/redis:5.0-alpine
+          ports:
+            - containerPort: 6379
+              protocol: TCP
+          volumeMounts:
+            - name: myredis  
+              mountPath: /data
+      volumes:
+        - name: myredis
+          persistentVolumeClaim: 
+            claimName: psql-aws-claim
+            readOnly: false                       

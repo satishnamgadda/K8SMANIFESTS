@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: jenkins-rs
+  labels:
+    app: jenkins
+spec:
+  minReadySeconds: 3
+  replicas: 3
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values: 
+          - apache
+          - jenkins
+      - key: ver
+        operator: Exists
+  template:
+    metadata:
+      name: jenkins-pod
+      labels:
+        app: jenkins
+        ver: "1.0"
+    spec:
+      containers:
+        - name: jenkins
+          image: jenkins/jenkins:lts-jdk11
+          ports:
+            - containerPort: 8080
+              protocol: TCP 
+      initContainers:
+        - name: alpine
+          image: alpine:3.17
+          command: 
+            - ping
+            - -c
+            - "4"
+            - google.com
