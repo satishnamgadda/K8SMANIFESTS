@@ -4,11 +4,14 @@ kind: Service
 metadata:
   name: openmrs-svc
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: openmrs
+    app1: gol
   ports:
     - name: webport
       port: 33000
       targetPort: 8080
-      nodePort: 32000  
+    - name: webport1
+      port: 31000  
+      targetPort: 8080
