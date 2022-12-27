@@ -57,4 +57,4 @@ spec:
             name: gol-svc
             port:
               number: 8080
-![preview](Images/k8s1.png)              
+          
