@@ -6,7 +6,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: db
+    app: cache
   ports:
     - name: cachedbport
       port: 35000

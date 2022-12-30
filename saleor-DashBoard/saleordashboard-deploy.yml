@@ -2,13 +2,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cache-deploy
+  name: saleordashboard-deploy
 spec:
   minReadySeconds: 5
   replicas: 1
-  selector: 
+  selector:
     matchLabels:
-      app: cache
+      app: saleordashboard
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -16,21 +16,23 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      name: cache-pod
+      name: saleordb
       labels:
-        app: cache
+        app: saleordashboard
     spec:
       containers:
-        - name: cachedb-pod
-          image: library/redis:5.0-alpine
+        - name: saleordb-pod
+          image: satish1990/saleor-dashboard:dev-19122022
           ports:
-            - containerPort: 6379
+            - containerPort: 9000
               protocol: TCP
           volumeMounts:
-            - name: myredis  
-              mountPath: /data
+            - name: mysaleordashboard
+              mountPath: /saleor  
       volumes:
-        - name: myredis
+        - name: mysaleorcore
           persistentVolumeClaim: 
             claimName: psql-aws-claim
-            readOnly: false                       
+            readOnly: false     
+
+                      

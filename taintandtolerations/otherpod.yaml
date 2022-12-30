@@ -12,3 +12,8 @@ spec:
       ports:
         - containerPort: 80
           protocol: TCP    
+   tolerations:
+    effect: NoSchedule
+    key: POC
+    operator: Equal
+    value: "true"         
