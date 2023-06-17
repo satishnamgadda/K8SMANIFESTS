@@ -35,20 +35,20 @@
       systemctl enable cri-docker.service
       systemctl enable --now cri-docker.socket
       ---------------
-    To Install kobelet,kubectl,kebeadm (on Both Master & Nodes) as Non-root user
+    To Install kubelet,kubectl,kebeadm (on Both Master & Nodes) as Non-root user
       
       sudo apt update
       sudo apt-get install -y apt-transport-https ca-certificates curl
-      sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+      curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
       echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
       sudo apt-get update
-      sudo apt-get install -y kubelet=1.25.5-00 kubeadm=1.25.5-00 kubectl=1.25.5-00
+      sudo apt-get install -y kubelet kubeadm kubectl
       sudo apt-mark hold kubelet kubeadm kubectl
       
     * to install kube-flannel as a root user
       ```
-      kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
-      ```
+     ##  kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+     
     * to create a cluster, login into master node & execute the following commands as a root user & including cri-socket
       ```
       kubeadm init --pod-network-cidr=10.244.0.0/16 --cri-socket=unix:///var/run/cri-dockerd.sock

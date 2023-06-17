@@ -12,6 +12,4 @@ spec:
     - name: webport
       port: 33000
       targetPort: 8080
-    - name: webport1
-      port: 31000  
-      targetPort: 8080
+   
