@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: satish1990/nop
+  repository: satish1990/saleor-dashboard
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "9.9"
+  tag: "dev-19122022"
 
 imagePullSecrets: []
 nameOverride: ""
