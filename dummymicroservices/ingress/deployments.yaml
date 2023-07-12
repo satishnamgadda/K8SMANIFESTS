@@ -28,13 +28,7 @@ spec:
           ports:
             - containerPort: 80
               protocol: TCP
-          readinessProbe:
-            httpGet:
-              port: 80
-              path: /
-          livenessProbe:
-            tcpSocket:
-              port: 80
+         
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -65,13 +59,7 @@ spec:
           ports:
             - containerPort: 80
               protocol: TCP
-          readinessProbe:
-            httpGet:
-              port: 80
-              path: /
-          livenessProbe:
-            tcpSocket:
-              port: 80 
+          
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -102,13 +90,7 @@ spec:
           ports:
             - containerPort: 80
               protocol: TCP
-          readinessProbe:
-            httpGet:
-              port: 80
-              path: /
-          livenessProbe:
-            tcpSocket:
-              port: 80 
+     
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -139,10 +121,4 @@ spec:
           ports:
             - containerPort: 80
               protocol: TCP
-          readinessProbe:
-            httpGet:
-              port: 80
-              path: /
-          livenessProbe:
-            tcpSocket:
-              port: 80                                        
+                                                
