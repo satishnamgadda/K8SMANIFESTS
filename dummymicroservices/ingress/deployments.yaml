@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: identity
-          image: satish1990/dummy-id-svc:1.0.0
+          image: satish1990/dummy-id-srv:1.0.0
           ports:
             - containerPort: 80
               protocol: TCP
@@ -55,7 +55,7 @@ spec:
     spec:
       containers:
         - name: catalog
-          image: satish1990/dummy-catalog-svc:1.0.0
+          image: satish1990/dummy-catalog-srv:1.0.0
           ports:
             - containerPort: 80
               protocol: TCP
@@ -86,7 +86,7 @@ spec:
     spec:
       containers:
         - name: order
-          image: satish1990/dummy-order-svc:1.0.0
+          image: satish1990/dummy-order-srv:1.0.0
           ports:
             - containerPort: 80
               protocol: TCP
@@ -117,7 +117,7 @@ spec:
     spec:
       containers:
         - name: basket
-          image: satish1990/dummy-basket-svc:1.0.0
+          image: satish1990/dummy-basket-srv:1.0.0
           ports:
             - containerPort: 80
               protocol: TCP
