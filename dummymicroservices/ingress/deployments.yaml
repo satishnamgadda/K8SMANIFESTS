@@ -1,0 +1,148 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity-deploy
+spec:
+  minReadySeconds: 5
+  replicas: 4
+  selector:
+    matchLabels:
+      app: identity
+      ver: "1.0.0"
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      name: identity-pod
+      labels:
+        app: identity
+        ver: "1.0.0"
+    spec:
+      containers:
+        - name: identity
+          image: satish1990/dummy-id-svc:1.0.0
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              port: 80
+              path: /
+          livenessProbe:
+            tcpSocket:
+              port: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-deploy
+spec:
+  minReadySeconds: 5
+  replicas: 4
+  selector:
+    matchLabels:
+      app: catalog
+      ver: "1.0.0"
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      name: catalog-pod
+      labels:
+        app: catalog
+        ver: "1.0.0"
+    spec:
+      containers:
+        - name: catalog
+          image: satish1990/dummy-catalog-svc:1.0.0
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              port: 80
+              path: /
+          livenessProbe:
+            tcpSocket:
+              port: 80 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-deploy
+spec:
+  minReadySeconds: 5
+  replicas: 4
+  selector:
+    matchLabels:
+      app: order
+      ver: "1.0.0"
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      name: order-pod
+      labels:
+        app: order
+        ver: "1.0.0"
+    spec:
+      containers:
+        - name: order
+          image: satish1990/dummy-order-svc:1.0.0
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              port: 80
+              path: /
+          livenessProbe:
+            tcpSocket:
+              port: 80 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: basket-deploy
+spec:
+  minReadySeconds: 5
+  replicas: 4
+  selector:
+    matchLabels:
+      app: basket
+      ver: "1.0.0"
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      name: basket-pod
+      labels:
+        app: basket
+        ver: "1.0.0"
+    spec:
+      containers:
+        - name: basket
+          image: satish1990/dummy-basket-svc:1.0.0
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              port: 80
+              path: /
+          livenessProbe:
+            tcpSocket:
+              port: 80                                        
