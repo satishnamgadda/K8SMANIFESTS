@@ -1,0 +1,64 @@
+To Create a EKS-cluster
+create a private cluster in  subnets(select two pvt subnets)
+select core-dns,vpc-CNI,kube-proxy,....
+create IAM Role- awsservice- EKS-AmazonEKSClusterPolicy
+nodegroup- IAM Role- awsservice- EC2-AmazonEC2ContainerRegistryFullAccess
+									-AmazonEKS_CNI_Policy
+									-AmazonEKSWorkerNodePolicy
+Create NAT gateway in public subnet, add route of pvt RT to fwd pckts to NAT.
+Create Bastion in pub subnet									
+install awscli
+sudo snap install aws-cli --classic
+install kubectl on linux
+https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
+   
+install eksctl on linux
+https://eksctl.io/installation/   
+
+update-kubeconfig
+https://docs.aws.amazon.com/cli/latest/reference/eks/update-kubeconfig.html
+
+
+aws eks update-kubeconfig \
+    --name eks1 \
+	--region ap-south-1
+install helm
+sudo snap install helm --classic	
+	use Helm to install aws-load-balancer-controller
+	https://docs.aws.amazon.com/eks/latest/userguide/lbc-helm.html
+		
+##Create IAM Role using eksctl	
+	
+eksctl create iamserviceaccount \
+  --cluster=eks1 \
+  --namespace=kube-system \
+  --name=aws-load-balancer-controller \
+  --role-name AmazonEKSLoadBalancerControllerRole \
+  --attach-policy-arn=arn:aws:iam::683493726927:policy/AWSLoadBalancerControllerIAMPolicy \
+  --approve	
+## Install AWS Load Balancer Controller
+
+helm repo add eks https://aws.github.io/eks-charts
+helm repo update eks
+helm upgrade --install aws-load-balancer-controller eks/aws-load-balancer-controller \
+  -n kube-system \
+  --set clusterName=eks1 \
+  --set serviceAccount.create=false \
+  --set serviceAccount.name=aws-load-balancer-controller  \
+  --set region=ap-south-1 --set aws-vpc-id=vpc-07c29cca876e0172a
+  helm --set region=ap-south-1 \
+       --set vpcId=vpc-095d16f9a587c5d81
+       
+  
+  kubectl get deployment -n kube-system aws-load-balancer-controller
+
+Nginx ingress controller:
+helm upgrade --install ingress-nginx ingress-nginx \
+  --repo https://kubernetes.github.io/ingress-nginx \
+  --namespace ingress-nginx --create-namespace
+kubectl get deploy -A
+helm show values ingress-nginx --repo https://kubernetes.github.io/ingress-nginx
+  
+
+
+
